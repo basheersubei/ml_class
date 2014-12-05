@@ -14,11 +14,11 @@ def main(api_key, category, label):
     
     content = []
     for i in range(0,5):
-        # print "http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=news_desk:('%s')&api-key=%s&page=%s" % (category, api_key, i)
-        h = urllib.urlopen("http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=news_desk:(\"%s\")&api-key=%s&page=%s" % (category, api_key, i))
+        # print "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=news:(\"%s\")&api-key=%s&page=%s" % (category, api_key, i)
+        h = urllib.urlopen("http://api.nytimes.com/svc/search/v2/articlesearch.json?q=news:(\"%s\")&api-key=%s&page=%s" % (category, api_key, i))
         data = json.loads(h.read())
-        for result in data['results']:
-            content.append(result['body'])
+        for result in data["response"]["docs"]:
+            content.append(result["snippet"])
             
     f = open(label, 'w')
     for line in content:
